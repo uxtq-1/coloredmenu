@@ -1,233 +1,206 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- ==================================================================
+       Document Metadata & External Resources
+       ================================================================== -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OPS Online Support - Futuristic Achievements</title>
+  
+  <!-- ==================================================================
+       CSS Stylesheets & Inline Landing Page Styles
+       ================================================================== -->
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" media="(max-width:768px)" href="css/small-screens.css">
+  
+  <!-- Inline styles specific to this landing page -->
   <style>
-    /* Base styling */
-    body {
+    /* ==================================================================
+         Landing Page Base Styles: Default Dark Theme
+         ================================================================== */
+    html, body {
       margin: 0;
       padding: 0;
+      height: 100%;
       font-family: Arial, sans-serif;
-      position: relative;
+      background: #000; /* Dark background */
+      color: #fff;
+      overflow: hidden;
     }
-    /* Container fixed at the bottom right */
-    .hamburger-menu {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-    }
-    /* Colored hamburger button */
-    .menu-button {
-      width: 40px;
-      height: 30px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      cursor: pointer;
-      margin-left: 10px;
-      background-color: #007BFF; /* Blue background */
-      padding: 5px;
-      border-radius: 5px;
-    }
-    /* Hamburger lines with contrasting color */
-    .menu-button div {
-      height: 4px;
-      background-color: #fff; /* White lines */
-      border-radius: 2px;
-    }
-    /* Horizontal menu content hidden by default */
-    .menu-content {
-      display: none;
-      background: #fff;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      overflow-x: auto;
-      white-space: nowrap;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-      padding: 10px;
-    }
-    .menu-content ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      align-items: center;
-    }
-    .menu-content li {
-      margin-right: 15px;
-      position: relative;
-    }
-    .menu-content li:last-child {
-      margin-right: 0;
-    }
-    /* Submenu styling (will be moved to body) */
-    .submenu {
+    /* ==================================================================
+         Particles Background Container
+         ================================================================== */
+    #particles-js {
       position: absolute;
-      background: #fff;
-      border: 1px solid #ccc;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+    /* ==================================================================
+         Landing Content Container
+         ================================================================== */
+    .landing-container {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding-top: 20%;
+    }
+    /* ==================================================================
+         Typewriter Effect Text
+         ================================================================== */
+    .typewriter-text {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 3px solid #fff;
+      width: 0;
+      animation: typing 4s steps(40, end) forwards, blink 0.7s step-end infinite;
+    }
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    @keyframes blink {
+      from, to { border-color: transparent; }
+      50% { border-color: #fff; }
+    }
+    /* ==================================================================
+         Achievement Counters Styling
+         ================================================================== */
+    .achievement-counters {
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+      margin-top: 40px;
+    }
+    .counter {
+      font-size: 2rem;
+    }
+    /* ==================================================================
+         Description Text
+         ================================================================== */
+    .description {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    /* ==================================================================
+         Call-to-Action Button Styling
+         ================================================================== */
+    .cta-button {
+      margin-top: 40px;
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      background-color: #00ffff;
+      color: #000;
+      border: none;
       border-radius: 5px;
-      padding: 5px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-      z-index: 1100;
-      display: none;
-      transition: opacity 0.3s ease;
-      opacity: 0;
-    }
-    .submenu.open {
-      display: block;
-      opacity: 1;
-    }
-    .submenu ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .submenu li {
-      margin: 5px 0;
-      list-style: disc;
-      margin-left: 15px;
-    }
-    /* Toggle switches styling */
-    .toggle-container {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-    .toggle-container label {
-      display: flex;
-      align-items: center;
-      gap: 5px;
       cursor: pointer;
+      transition: background-color 0.3s;
     }
-    /* Chat icon styling */
-    .chat-icon {
-      font-size: 18px;
-      vertical-align: middle;
-    }
-    /* Service option styling to indicate clickable nature */
-    .services > a {
-      cursor: pointer;
+    .cta-button:hover {
+      background-color: #7e69ab;
     }
   </style>
+  
+  <!-- ==================================================================
+       Particles.js Library
+       ================================================================== -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 </head>
 <body>
-
-  <div class="hamburger-menu">
-    <div class="menu-content" id="menuContent">
-      <ul>
-        <li><a href="#">Home</a></li>
-        <li class="services">
-          <a id="servicesToggle">Services</a>
-          <!-- Submenu defined here, moved to body later -->
-          <div class="submenu" id="servicesSubmenu">
-            <ul>
-              <li><a href="#">Business Operations</a></li>
-              <li><a href="#">Contact Center</a></li>
-              <li><a href="#">IT Support</a></li>
-              <li><a href="#">Professionals</a></li>
-            </ul>
-          </div>
-        </li>
-        <li class="toggle-container">
-          <label>
-            <input type="checkbox" id="langToggle">
-            EN / ES
-          </label>
-        </li>
-        <li class="toggle-container">
-          <label>
-            <input type="checkbox" id="themeToggle">
-            Dark / Light
-          </label>
-        </li>
-        <li>
-          <a href="#" id="chatButton">Chat <span class="chat-icon">💬</span></a>
-        </li>
-      </ul>
+  <!-- ==================================================================
+       Particles Background Container
+       ================================================================== -->
+  <div id="particles-js"></div>
+  
+  <!-- ==================================================================
+       Landing Page Content Container
+       ================================================================== -->
+  <div class="landing-container">
+    <!-- ==================================================================
+         Typewriter Effect Text: Dynamic Intro Message
+         ================================================================== -->
+    <div class="typewriter-text">
+      OPS Online Support: Achieving Futuristic Results...
     </div>
-    <div class="menu-button" id="menuToggle">
-      <div></div>
-      <div></div>
-      <div></div>
+    
+    <!-- ==================================================================
+         Achievement Counters: Display Outstanding Results
+         ================================================================== -->
+    <div class="achievement-counters">
+      <div class="counter" id="counter-efficiency">0%</div>
+      <div class="counter" id="counter-response">0s</div>
+      <div class="counter" id="counter-satisfaction">0%</div>
     </div>
+    
+    <!-- ==================================================================
+         Description Paragraph: Technical, Professional Message
+         ================================================================== -->
+    <div class="description">
+      Experience the next generation of remote assistance. Our cutting-edge strategies deliver unmatched efficiency, lightning-fast response times, and customer satisfaction that redefines excellence.
+    </div>
+    
+    <!-- ==================================================================
+         Call-to-Action Button: Navigate to Main OPS Online Support Page
+         ================================================================== -->
+    <button class="cta-button" onclick="goToMainPage()">Click to Advance</button>
   </div>
-
+  
+  <!-- ==================================================================
+       JavaScript: Landing Page Effects & Navigation
+       ================================================================== -->
   <script>
-    // Toggle the horizontal menu on button click
-    const menuToggle = document.getElementById('menuToggle');
-    const menuContent = document.getElementById('menuContent');
-    menuToggle.addEventListener('click', () => {
-      menuContent.style.display = menuContent.style.display === 'flex' ? 'none' : 'flex';
+    // ------------------------------------------------------------------
+    // Particles.js Configuration: Futuristic Background Effect
+    // ------------------------------------------------------------------
+    particlesJS('particles-js', {
+      particles: {
+        number: { value: 100, density: { enable: true, value_area: 800 } },
+        color: { value: '#00ffff' },
+        shape: { type: 'circle' },
+        opacity: { value: 0.5, random: false },
+        size: { value: 3, random: true },
+        line_linked: { enable: true, distance: 150, color: '#00ffff', opacity: 0.4, width: 1 },
+        move: { enable: true, speed: 3, direction: 'none', random: false, straight: false, out_mode: 'out' }
+      },
+      interactivity: {
+        detect_on: 'canvas',
+        events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' }, resize: true },
+        modes: { repulse: { distance: 100, duration: 0.4 } }
+      }
     });
-
-    // Get reference to services toggle and submenu
-    const servicesToggle = document.getElementById('servicesToggle');
-    const servicesSubmenu = document.getElementById('servicesSubmenu');
-
-    // Move the submenu out of its parent container into the body
-    document.body.appendChild(servicesSubmenu);
-
-    // Function to position the submenu relative to the "Services" link
-    function positionSubmenu() {
-      const rect = servicesToggle.getBoundingClientRect();
-      servicesSubmenu.style.top = rect.top - servicesSubmenu.offsetHeight + "px";
-      servicesSubmenu.style.left = rect.left + "px";
+    
+    // ------------------------------------------------------------------
+    // Achievement Counters: Animate Metrics for a Sense of Achievement
+    // ------------------------------------------------------------------
+    function animateCounter(id, target, suffix) {
+      const element = document.getElementById(id);
+      let current = 0;
+      const increment = target / 200; // Adjust speed here
+      const interval = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          current = target;
+          clearInterval(interval);
+        }
+        element.textContent = Math.floor(current) + suffix;
+      }, 10);
     }
-
-    // Toggle the services submenu on click with positioning update
-    servicesToggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (servicesSubmenu.classList.contains('open')) {
-        servicesSubmenu.classList.remove('open');
-      } else {
-        // Position the submenu relative to the Services link
-        positionSubmenu();
-        servicesSubmenu.classList.add('open');
-      }
-    });
-
-    // Close services submenu if clicked anywhere outside
-    document.addEventListener('click', (e) => {
-      if (!servicesToggle.contains(e.target) && !servicesSubmenu.contains(e.target)) {
-        servicesSubmenu.classList.remove('open');
-      }
-    });
-
-    // Dark / Light theme toggle functionality
-    const themeToggle = document.getElementById('themeToggle');
-    themeToggle.addEventListener('change', function() {
-      if (this.checked) {
-        document.body.style.backgroundColor = '#333';
-        document.body.style.color = '#fff';
-      } else {
-        document.body.style.backgroundColor = '#fff';
-        document.body.style.color = '#000';
-      }
-    });
-
-    // Language toggle stub functionality
-    const langToggle = document.getElementById('langToggle');
-    langToggle.addEventListener('change', function() {
-      alert('Language switched to ' + (this.checked ? 'ES' : 'EN'));
-    });
-
-    // Chat button stub functionality
-    const chatButton = document.getElementById('chatButton');
-    chatButton.addEventListener('click', function(e) {
-      e.preventDefault();
-      alert('Chat clicked!');
-    });
-
-    // Update submenu position on window resize (optional)
-    window.addEventListener('resize', () => {
-      if (servicesSubmenu.classList.contains('open')) {
-        positionSubmenu();
-      }
-    });
+    animateCounter('counter-efficiency', 95, '%');  // 95% Efficiency
+    animateCounter('counter-response', 1, 's');       // 1 second Response Time
+    animateCounter('counter-satisfaction', 98, '%');  // 98% Satisfaction
+    
+    // ------------------------------------------------------------------
+    // Navigation Function: Redirect to Main OPS Online Support Page
+    // ------------------------------------------------------------------
+    function goToMainPage() {
+      window.location.href = 'index.html'; // Update this URL as needed
+    }
   </script>
-
 </body>
 </html>
